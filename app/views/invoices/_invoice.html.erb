@@ -1,5 +1,15 @@
 <div id="<%= dom_id invoice %>">
   <p>
+    <strong>pdf_document:</strong>
+    <% if invoice.pdf_document.attached? %>
+      <%= invoice.pdf_document.blob.filename %>
+      <%= invoice.pdf_document.blob.content_type %>
+      <%= invoice.pdf_document.blob.byte_size %>
+    <% else %>
+      No pdf document attached
+    <% end %>
+  </p>
+  <p>
     <strong>Xml format:</strong>
     <%= invoice.xml_format %>
   </p>

@@ -11,4 +11,19 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
     get invoice_url(@invoice)
     assert_response :success
   end
+
+  test "should import invoices" do
+    assert_equal 2, Invoice.count
+
+    file_path_1 =  "db/fixtures/factur-x/BASIC/BASIC_Einfach.pdf"
+    file_path_2 =  "db/fixtures/factur-x/BASIC/BASIC_Rechnungskorrektur.pdf"
+    file_1 = fixture_file_upload(file_path_1, "application/pdf")
+    file_2 = fixture_file_upload(file_path_2, "application/pdf")
+
+    post import_invoices_url, params: { files: [file_1, file_2] }
+    assert_response :success
+
+    assert_equal 4, Invoice.count
+    assert Invoice.last.pdf_document.attached?
+  end
 end
