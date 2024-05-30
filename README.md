@@ -1,9 +1,17 @@
 ### App features
 
-- import PDF files
-- generate Invoice objects with attached PDF files
+- import PDF file(s). Examples can be found `db/fixtures/factur-x/`
+- generate Invoice objects from attached PDF files
 - parse PDF files to extract XML
 - parse XML to get required data
+
+### Run app
+
+```
+bundle
+rails db:create db:migrate
+rails s
+```
 
 ### Theoretical notes
 
