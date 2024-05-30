@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Import</h1>
 
 <%= render 'import' %>
@@ -9,8 +7,5 @@
 <div id="invoices">
   <% @invoices.each do |invoice| %>
     <%= render invoice %>
-    <p>
-      <%= link_to "Show this invoice", invoice %>
-    </p>
   <% end %>
 </div>

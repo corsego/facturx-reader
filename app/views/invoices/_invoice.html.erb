@@ -1,4 +1,5 @@
 <div id="<%= dom_id invoice %>">
+  <%= link_to invoice.id, invoice_path(invoice) %>
   <p>
     <strong>pdf_document:</strong>
     <% if invoice.pdf_document.attached? %>

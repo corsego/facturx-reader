@@ -11,6 +11,11 @@
   </head>
 
   <body>
+    <% if notice %>
+      <p style="color: green"><%= notice %></p>
+    <% end %>
+    <%= link_to_unless_current 'Invoices', invoices_path %>
+    <hr>
     <%= yield %>
   </body>
 </html>
