@@ -23,7 +23,7 @@ class Invoice < ApplicationRecord
 
   def extract_xml
     if pdf_document.attached?
-      PdfToXmlJob.perform_now(self)
+      PdfBlobToXmlJob.perform_now(self)
     end
   end
 end
