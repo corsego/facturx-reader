@@ -66,4 +66,5 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "hexapdf", "~> 0.43.0"
+gem "hexapdf", "~> 0.43.0" # get xml from pdf
+gem 'nori' # xml to hash
