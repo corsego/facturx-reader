@@ -1,5 +1,5 @@
 # all the methods related to factur-x documents are defined here
-module XmlDocumentConcern
+module FacturxJsonConcern
   extend ActiveSupport::Concern
 
   def xml_document_to_json
