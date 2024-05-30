@@ -1,15 +1,16 @@
 # extract embedded files from a PDF document
 # only files that are named `factur-x.xml` or `xrechnung.xml` are extracted
 
-# file = 'db/fixtures/factur-x/BASIC/BASIC_Einfach.pdf'
-# PdfToXmlJob.perform_now(file)
+# file_path = 'db/fixtures/factur-x/BASIC/BASIC_Einfach.pdf'
+# file_path = 'db/fixtures/factur-x/EXTENDED/EXTENDED_Fremdwaehrung.pdf'
+# PdfToXmlJob.perform_now(file_path)
 class PdfToXmlJob < ApplicationJob
   queue_as :default
 
   VALID_FILENAME = %w[factur-x.xml xrechnung.xml].freeze
 
-  def perform(file)
-    pdf = HexaPDF::Document.open(file)
+  def perform(file_path)
+    pdf = HexaPDF::Document.open(file_path)
     catalog = pdf.catalog
 
     if catalog.key?(:Names) && catalog[:Names].key?(:EmbeddedFiles)
@@ -22,8 +23,8 @@ class PdfToXmlJob < ApplicationJob
         file_name = file_spec[:UF] ? file_spec[:UF].to_s : name
 
         if VALID_FILENAME.include?(file_name)
-          new_file = File.basename(file).gsub!('.pdf', '.xml')
-          File.open(new_file, 'wb') do |file|
+          new_file = File.basename(file_path).gsub!('.pdf', '.xml')
+          File.open("db/fixtures/xml/#{new_file}", 'wb') do |file|
             file.write(file_stream.stream)
           end
 
