@@ -22,11 +22,12 @@ class PdfToXmlJob < ApplicationJob
         file_name = file_spec[:UF] ? file_spec[:UF].to_s : name
 
         if VALID_FILENAME.include?(file_name)
-          File.open(file_name, 'wb') do |file|
+          new_file = File.basename(file).gsub!('.pdf', '.xml')
+          File.open(new_file, 'wb') do |file|
             file.write(file_stream.stream)
           end
 
-          puts "Extracted file: #{file_name}"
+          puts "Extracted file: #{new_file}"
         end
       end
     else
