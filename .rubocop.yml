@@ -34,3 +34,18 @@ Lint/UnusedMethodArgument:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 50
+
+Metrics/MethodLength:
+  Max: 35
+
+Metrics/PerceivedComplexity:
+  Max: 12
+
+Rails/I18nLocaleTexts:
+  Enabled: false

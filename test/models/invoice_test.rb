@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# rubocop:disable Layout/LineLength
 class InvoiceTest < ActiveSupport::TestCase
   test 'xml_document_to_json BASIC_Einfach.pdf' do
     invoice = Invoice.create
@@ -28,3 +29,4 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_match '2000.00', invoice.due_payable_amount
   end
 end
+# rubocop:enable Layout/LineLength
