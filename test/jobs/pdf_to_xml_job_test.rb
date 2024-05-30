@@ -8,7 +8,7 @@ class PdfToXmlJobTest < ActiveJob::TestCase
     invoice.pdf_document.attach(io: File.open(file_path), filename: 'BASIC_Einfach.pdf')
     PdfToXmlJob.perform_now(invoice)
 
-    assert_match "<?xml version=", invoice.xml_format
+    assert_match "<?xml version=", invoice.xml_document
     assert File.exist?('factur-x.xml')
     File.delete('factur-x.xml')
   end
@@ -19,7 +19,7 @@ class PdfToXmlJobTest < ActiveJob::TestCase
     invoice.pdf_document.attach(io: File.open(file_path), filename: 'BASIC_Rechnungskorrektur.pdf')
     PdfToXmlJob.perform_now(invoice)
 
-    assert_match "<?xml version=", invoice.xml_format
+    assert_match "<?xml version=", invoice.xml_document
     assert File.exist?('factur-x.xml')
     File.delete('factur-x.xml')
   end

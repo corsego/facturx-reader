@@ -27,7 +27,7 @@ class PdfToXmlJob < ApplicationJob
         file_name = file_spec[:UF] ? file_spec[:UF].to_s : name
 
         if VALID_FILENAME.include?(file_name)
-          invoice.update(xml_format: file_stream.stream.force_encoding('UTF-8'))
+          invoice.update(xml_document: file_stream.stream.force_encoding('UTF-8'))
           File.open(file_name, 'wb') do |file|
             file.write(file_stream.stream)
           end

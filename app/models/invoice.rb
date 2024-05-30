@@ -1,14 +1,14 @@
 require 'nokogiri'
 # mark invalid if no xml
 
-# xml_format: text
+# xml_document: text
 class Invoice < ApplicationRecord
   has_one_attached :pdf_document
 
   after_create_commit :extract_xml
 
   def parsed_xml
-    Nokogiri::XML(xml_format)
+    Nokogiri::XML(xml_document)
   end
 
   def iban

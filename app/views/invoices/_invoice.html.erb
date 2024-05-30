@@ -11,9 +11,9 @@
   </p>
   <p>
     <strong>Xml format:</strong>
-    <% if invoice.xml_format.present? %>
+    <% if invoice.xml_document.present? %>
       ✅
-      <%#= invoice.xml_format %>
+      <%#= invoice.xml_document %>
       <%#= invoice.parsed_xml %>
       <b>IBAN</b>
       <%= invoice.iban %>
