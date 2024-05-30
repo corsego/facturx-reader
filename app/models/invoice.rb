@@ -1,6 +1,8 @@
 # xml_document: :text
 # xml_valid: :boolean
 class Invoice < ApplicationRecord
+  include XmlDocumentConcern
+
   has_one_attached :pdf_document
 
   after_create_commit :extract_xml
@@ -15,15 +17,6 @@ class Invoice < ApplicationRecord
 
   def account_name
     parsed_xml.xpath('//ram:AccountName').text
-  end
-
-  def xml_document_to_json
-    return '' if xml_document.nil?
-
-    parser = Nori.new
-    hash = parser.parse(xml_document)
-    hash.to_json
-    JSON.parse(hash.to_json)
   end
 
   private
