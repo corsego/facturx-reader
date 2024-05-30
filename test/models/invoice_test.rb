@@ -10,6 +10,7 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_match "<?xml version=", invoice.xml_document
     due_payable_amount = invoice.xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeSettlement', 'ram:SpecifiedTradeSettlementHeaderMonetarySummation', 'ram:DuePayableAmount')
     assert_match "235.62", due_payable_amount
+    assert_match "235.62", invoice.due_payable_amount
   end
 
   test "xml_document_to_json EXTENDED_InnergemeinschLieferungMehrereBestellungen.pdf" do
