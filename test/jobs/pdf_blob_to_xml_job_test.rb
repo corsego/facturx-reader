@@ -9,6 +9,7 @@ class PdfBlobToXmlJobTest < ActiveJob::TestCase
     PdfBlobToXmlJob.perform_now(invoice)
 
     assert_match "<?xml version=", invoice.xml_document
+    assert invoice.xml_valid
   end
 
   test "BASIC_Rechnungskorrektur" do
@@ -18,5 +19,16 @@ class PdfBlobToXmlJobTest < ActiveJob::TestCase
     PdfBlobToXmlJob.perform_now(invoice)
 
     assert_match "<?xml version=", invoice.xml_document
+    assert invoice.xml_valid
+  end
+
+  test 'invalid file' do
+    invoice = Invoice.create
+    file = Tempfile.new(['invalid', '.pdf'])
+    invoice.pdf_document.attach(io: File.open(file), filename: 'invalid.pdf')
+    PdfBlobToXmlJob.perform_now(invoice)
+
+    assert_nil invoice.xml_document
+    refute invoice.xml_valid
   end
 end
