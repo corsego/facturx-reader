@@ -27,6 +27,12 @@ class InvoiceTest < ActiveSupport::TestCase
                                                           'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeSettlement', 'ram:SpecifiedTradeSettlementHeaderMonetarySummation', 'ram:DuePayableAmount')
     assert_match '2000.00', due_payable_amount
     assert_match '2000.00', invoice.due_payable_amount
+    assert_match '2018-10-31T00:00:00+00:00', invoice.invoice_date.to_s
+    assert_match '47110818', invoice.invoice_number
+    assert_match invoice.sender[:name].strip, 'Global Supplies Ltd.'
+    assert_match invoice.sender[:vat], 'GB999999999'
+    assert_match invoice.recipient[:name], 'Metallbau Leipzig GmbH & Co. KG'
+    assert_match invoice.recipient[:vat], 'DE123456789'
   end
 end
 # rubocop:enable Layout/LineLength
