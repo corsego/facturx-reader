@@ -11,8 +11,8 @@ class Invoice < ApplicationRecord
   private
 
   def extract_xml
-    if pdf_document.attached?
-      PdfBlobToXmlJob.perform_now(self)
-    end
+    return unless pdf_document.attached?
+
+    PdfBlobToXmlJob.perform_now(self)
   end
 end

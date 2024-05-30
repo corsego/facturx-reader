@@ -22,17 +22,15 @@ class PdfToXmlJob < ApplicationJob
         file_stream = file_spec[:EF][:F]
         file_name = file_spec[:UF] ? file_spec[:UF].to_s : name
 
-        if VALID_FILENAME.include?(file_name)
-          new_file = File.basename(file_path).gsub!('.pdf', '.xml')
-          File.open("db/fixtures/xml/#{new_file}", 'wb') do |file|
-            file.write(file_stream.stream)
-          end
+        next unless VALID_FILENAME.include?(file_name)
 
-          puts "Extracted file: #{new_file}"
-        end
+        new_file = File.basename(file_path).gsub!('.pdf', '.xml')
+        File.binwrite("db/fixtures/xml/#{new_file}", file_stream.stream)
+
+        puts "Extracted file: #{new_file}"
       end
     else
-      puts "No embedded files found in the PDF."
+      puts 'No embedded files found in the PDF.'
     end
   end
 end

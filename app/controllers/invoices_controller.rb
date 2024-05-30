@@ -5,14 +5,14 @@ class InvoicesController < ApplicationController
 
   def import
     files = params[:files]
-    files = files.reject(&:blank?)
+    files = files.compact_blank
     files.each do |file|
-      next unless file.content_type == "application/pdf"
+      next unless file.content_type == 'application/pdf'
 
       Invoice.create(pdf_document: file)
     end
 
-    redirect_to invoices_url, notice: "Invoices imported."
+    redirect_to invoices_url, notice: 'Invoices imported.'
   end
 
   def show

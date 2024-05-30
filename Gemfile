@@ -68,3 +68,5 @@ end
 
 gem "hexapdf", "~> 0.43.0" # get xml from pdf
 gem 'nori' # xml to hash
+
+gem "rubocop-rails", "~> 2.25"

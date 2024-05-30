@@ -21,12 +21,10 @@ if catalog.key?(:Names) && catalog[:Names].key?(:EmbeddedFiles)
     file_name = file_spec[:UF] ? file_spec[:UF].to_s : name
 
     # Write the file to the local file system
-    File.open(file_name, 'wb') do |file|
-      file.write(file_stream.stream)
-    end
+    File.binwrite(file_name, file_stream.stream)
 
     puts "Extracted file: #{file_name}"
   end
 else
-  puts "No embedded files found in the PDF."
+  puts 'No embedded files found in the PDF.'
 end

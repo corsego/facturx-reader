@@ -32,15 +32,15 @@ class PdfBlobToXmlJob < ApplicationJob
         file_stream = file_spec[:EF][:F]
         file_name = file_spec[:UF] ? file_spec[:UF].to_s : name
 
-        if VALID_FILENAME.include?(file_name)
-          invoice.update(xml_document: file_stream.stream.force_encoding('UTF-8'))
-          invoice.update(xml_valid: true)
+        next unless VALID_FILENAME.include?(file_name)
 
-          puts "Extracted file: #{file_name}"
-        end
+        invoice.update(xml_document: file_stream.stream.force_encoding('UTF-8'))
+        invoice.update(xml_valid: true)
+
+        puts "Extracted file: #{file_name}"
       end
     else
-      puts "No embedded files found in the PDF."
+      puts 'No embedded files found in the PDF.'
     end
 
     invoice.update(xml_valid: false) unless invoice.xml_valid?
