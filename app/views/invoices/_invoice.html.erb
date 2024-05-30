@@ -11,7 +11,17 @@
   </p>
   <p>
     <strong>Xml format:</strong>
-    <%= invoice.xml_format %>
+    <% if invoice.xml_format.present? %>
+      ✅
+      <%#= invoice.xml_format %>
+      <%#= invoice.parsed_xml %>
+      <b>IBAN</b>
+      <%= invoice.iban %>
+      <b>Account Name</b>
+      <%= invoice.account_name %>
+    <% else %>
+      ❌
+    <% end %>
   </p>
 
 </div>

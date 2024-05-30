@@ -11,6 +11,8 @@ class InvoicesController < ApplicationController
 
       Invoice.create(pdf_document: file)
     end
+
+    redirect_to invoices_url, notice: "Invoices imported."
   end
 
   def show

@@ -2,6 +2,8 @@
 
 <%= render @invoice %>
 
+<%= @invoice.xml_format %>
+
 <div>
   <%= link_to "Back to invoices", invoices_path %>
 </div>
