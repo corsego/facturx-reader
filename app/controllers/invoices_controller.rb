@@ -7,9 +7,12 @@ class InvoicesController < ApplicationController
     files = params[:files]
     files = files.compact_blank
     files.each do |file|
-      next unless file.content_type == 'application/pdf'
-
-      Invoice.create(pdf_document: file)
+      case file.content_type
+      when 'application/pdf'
+        Invoice.create(pdf_document: file)
+      when 'application/xml'
+        Invoice.create(xml_document: File.read(file))
+      end
     end
 
     redirect_to invoices_url, notice: 'Invoices imported.'

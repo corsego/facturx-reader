@@ -24,4 +24,16 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, Invoice.count
     assert Invoice.last.pdf_document.attached?
   end
+
+  test 'should import xml invoices' do
+    file_path = 'db/fixtures/xml/EXTENDED_Fremdwaehrung.xml'
+    file = fixture_file_upload(file_path, 'application/xml')
+
+    post import_invoices_url, params: { files: [file] }
+    assert_redirected_to invoices_url
+
+    assert_equal 1, Invoice.count
+    assert Invoice.last.xml_document.present?
+    assert_equal 'GBP', Invoice.last.invoice_currency_code
+  end
 end

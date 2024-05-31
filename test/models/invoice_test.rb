@@ -36,7 +36,6 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_match invoice.invoice_currency_code, 'EUR'
   end
 
-  # file_path = 'db/fixtures/factur-x/EXTENDED/EXTENDED_Fremdwaehrung.pdf'
   test 'xml_document_to_json EXTENDED_Fremdwaehrung.pdf' do
     invoice = Invoice.create
     file_path = 'db/fixtures/factur-x/EXTENDED/EXTENDED_Fremdwaehrung.pdf'
@@ -44,6 +43,12 @@ class InvoiceTest < ActiveSupport::TestCase
     PdfBlobToXmlJob.perform_now(invoice)
 
     assert_match invoice.invoice_currency_code, 'GBP'
+  end
+
+  test "import xml document directly" do
+    file_path = 'db/fixtures/xml/EXTENDED_Fremdwaehrung.xml'
+    invoice = Invoice.create(xml_document: File.read(file_path))
+    assert_equal invoice.invoice_currency_code, 'GBP'
   end
 end
 # rubocop:enable Layout/LineLength

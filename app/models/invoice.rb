@@ -13,6 +13,13 @@ class Invoice < ApplicationRecord
   def extract_xml
     return unless pdf_document.attached?
 
-    PdfBlobToXmlJob.perform_now(self)
+    if xml_document.present?
+      validate_xml
+    elsif pdf_document.blob.content_type == 'application/pdf'
+      PdfBlobToXmlJob.perform_now(self)
+    end
+  end
+
+  def validate_xml
   end
 end
