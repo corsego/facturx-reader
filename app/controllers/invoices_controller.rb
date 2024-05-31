@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   def index
-    @invoices = Invoice.all
+    @invoices = Invoice.order(created_at: :desc)
   end
 
   def import

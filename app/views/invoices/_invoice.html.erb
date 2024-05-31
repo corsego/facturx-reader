@@ -1,28 +1,30 @@
-<div id="<%= dom_id invoice %>">
+<div id="<%= dom_id invoice %>" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
   <%= link_to invoice.id, invoice_path(invoice) %>
   <p>
-    <strong>pdf_document:</strong>
+    <strong>File attached:</strong>
     <% if invoice.pdf_document.attached? %>
       <%= invoice.pdf_document.blob.filename %>
-      <%= invoice.pdf_document.blob.content_type %>
-      <%= invoice.pdf_document.blob.byte_size %>
+      <%#= invoice.pdf_document.blob.content_type %>
+      <%#= invoice.pdf_document.blob.byte_size %>
     <% else %>
-      No pdf document attached
-    <% end %>
-  </p>
-  <p>
-    <strong>Xml format:</strong>
-    <% if invoice.xml_document.present? %>
-      ✅
-      <%#= invoice.xml_document %>
-      <%#= invoice.parsed_xml %>
-      <b>IBAN</b>
-      <%= invoice.iban %>
-      <b>Account Name</b>
-      <%= invoice.account_name %>
-    <% else %>
-      ❌
+      No attachments
     <% end %>
   </p>
 
+  <p>
+    <strong>Valid FacturX:</strong>
+    <%= boolean_label(invoice.xml_valid) %>
+  </p>
+
+  <p>
+    <strong>Invoice attributes:</strong>
+    <% if invoice.xml_document.present? %>
+      <br>
+      invoice_date:
+      <%= invoice.invoice_date %>
+      <br>
+      due_payable_amount:
+      <%= invoice.due_payable_amount %>
+    <% end %>
+  </p>
 </div>
