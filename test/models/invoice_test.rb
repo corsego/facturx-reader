@@ -33,6 +33,17 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_match invoice.sender[:vat], 'GB999999999'
     assert_match invoice.recipient[:name], 'Metallbau Leipzig GmbH & Co. KG'
     assert_match invoice.recipient[:vat], 'DE123456789'
+    assert_match invoice.invoice_currency_code, 'EUR'
+  end
+
+  # file_path = 'db/fixtures/factur-x/EXTENDED/EXTENDED_Fremdwaehrung.pdf'
+  test 'xml_document_to_json EXTENDED_Fremdwaehrung.pdf' do
+    invoice = Invoice.create
+    file_path = 'db/fixtures/factur-x/EXTENDED/EXTENDED_Fremdwaehrung.pdf'
+    invoice.pdf_document.attach(io: File.open(file_path), filename: 'EXTENDED_Fremdwaehrung.pdf')
+    PdfBlobToXmlJob.perform_now(invoice)
+
+    assert_match invoice.invoice_currency_code, 'GBP'
   end
 end
 # rubocop:enable Layout/LineLength

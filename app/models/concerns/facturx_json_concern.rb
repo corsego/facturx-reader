@@ -17,6 +17,10 @@ module FacturxJsonConcern
     xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeSettlement', 'ram:SpecifiedTradeSettlementHeaderMonetarySummation', 'ram:DuePayableAmount')
   end
 
+  def invoice_currency_code
+    xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeSettlement', 'ram:InvoiceCurrencyCode')
+  end
+
   def invoice_date
     DateTime.parse xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:ExchangedDocument', 'ram:IssueDateTime', 'udt:DateTimeString')
   end
