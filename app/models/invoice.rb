@@ -11,15 +11,16 @@ class Invoice < ApplicationRecord
   private
 
   def extract_xml
-    return unless pdf_document.attached?
-
     if xml_document.present?
       validate_xml
-    elsif pdf_document.blob.content_type == 'application/pdf'
+    elsif pdf_document.attached? && pdf_document.blob.content_type == 'application/pdf'
       PdfBlobToXmlJob.perform_now(self)
     end
   end
 
   def validate_xml
+    # assumes that the xml is valid if the invoice number is present
+    # alternative would be to use an XML schema validation tool
+    update(xml_valid: invoice_number.present?)
   end
 end

@@ -49,6 +49,16 @@ class InvoiceTest < ActiveSupport::TestCase
     file_path = 'db/fixtures/xml/EXTENDED_Fremdwaehrung.xml'
     invoice = Invoice.create(xml_document: File.read(file_path))
     assert_equal invoice.invoice_currency_code, 'GBP'
+
+    assert invoice.invoice_number.present?
+    assert invoice.reload.xml_valid
+  end
+
+  test "import xml document directly with invalid xml" do
+    file_path = 'db/fixtures/xml/EXTENDED_Fremdwaehrung_invalid.xml'
+    invoice = Invoice.create(xml_document: File.read(file_path))
+    assert_nil invoice.invoice_number
+    refute invoice.reload.xml_valid
   end
 end
 # rubocop:enable Layout/LineLength
