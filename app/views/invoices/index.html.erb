@@ -2,7 +2,10 @@
 
 <%= render 'import' %>
 
-<h1>Invoices</h1>
+<h1>
+  Invoices:
+  <%= @invoices.count %>
+</h1>
 
 <div id="invoices">
   <% @invoices.each do |invoice| %>
