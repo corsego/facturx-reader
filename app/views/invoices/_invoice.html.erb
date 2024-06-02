@@ -25,6 +25,9 @@
     <strong>Invoice attributes:</strong>
     <% if invoice.xml_document.present? %>
       <br>
+      invoice_number:
+      <%= invoice.invoice_number %>
+      <br>
       invoice_date:
       <%= invoice.invoice_date %>
       <br>
@@ -33,6 +36,12 @@
       <br>
       invoice_currency_code:
       <%= invoice.invoice_currency_code %>
+      <br>
+      sender:
+      <%= invoice.sender %>
+      <br>
+      recipient:
+      <%= invoice.recipient %>
     <% end %>
   </p>
 </div>
