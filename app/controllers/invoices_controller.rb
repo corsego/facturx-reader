@@ -10,7 +10,7 @@ class InvoicesController < ApplicationController
       case file.content_type
       when 'application/pdf'
         Invoice.create(pdf_document: file)
-      when 'application/xml'
+      when 'text/xml' || 'application/xml'
         Invoice.create(xml_document: File.read(file))
       end
     end
