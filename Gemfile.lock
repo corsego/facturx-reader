@@ -103,6 +103,12 @@ GEM
       reline (>= 0.3.8)
     drb (2.2.1)
     erubi (1.12.0)
+    ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-arm-linux-gnu)
+    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86-linux-gnu)
+    ffi (1.17.0-x86_64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     geom2d (0.4.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -112,6 +118,9 @@ GEM
       openssl (>= 2.2.1)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     importmap-rails (2.0.1)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -135,6 +144,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
+    mini_magick (4.12.0)
     mini_mime (1.1.5)
     minitest (5.23.1)
     msgpack (1.7.2)
@@ -243,6 +253,8 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
+    ruby-vips (2.2.1)
+      ffi (~> 1.12)
     rubyzip (2.3.2)
     selenium-webdriver (4.21.1)
       base64 (~> 0.2)
@@ -302,13 +314,13 @@ DEPENDENCIES
   capybara
   debug
   hexapdf (~> 0.43.0)
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   nori
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.3)
   redis (>= 4.0.1)
-  rubocop (~> 1.64)
   rubocop-rails (~> 2.25)
   selenium-webdriver
   sprockets-rails
