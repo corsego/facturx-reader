@@ -31,7 +31,7 @@ module FacturxJsonConcern
 
   def sender
     { name: xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeAgreement', 'ram:SellerTradeParty', 'ram:Name'),
-      vat: xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeAgreement', 'ram:SellerTradeParty', 'ram:SpecifiedTaxRegistration', 'ram:ID') }
+      vat: sender_vat }
   end
 
   def recipient
@@ -53,6 +53,19 @@ module FacturxJsonConcern
       totals[tax_rate] += total_amount
     end
     totals
+  end
+
+  private
+
+  # [{"ram:ID"=>"201/113/40209"}, {"ram:ID"=>"DE123456789"}]
+  def sender_vat
+    result = xml_document_to_json.dig('rsm:CrossIndustryInvoice', 'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeAgreement', 'ram:SellerTradeParty', 'ram:SpecifiedTaxRegistration')
+
+    vat = if result.is_a?(Array)
+      result.map { |item| item['ram:ID'] }
+    else
+      result['ram:ID']
+    end
   end
 end
 # rubocop:enable Layout/LineLength

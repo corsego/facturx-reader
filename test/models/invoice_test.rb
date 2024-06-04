@@ -11,8 +11,8 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_match '<?xml version=', invoice.xml_document
     due_payable_amount = invoice.xml_document_to_json.dig('rsm:CrossIndustryInvoice',
                                                           'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeSettlement', 'ram:SpecifiedTradeSettlementHeaderMonetarySummation', 'ram:DuePayableAmount')
-    assert_match '235.62', due_payable_amount
-    assert_match '235.62', invoice.due_payable_amount
+    assert_equal '235.62', due_payable_amount
+    assert_equal '235.62', invoice.due_payable_amount
   end
 
   test 'xml_document_to_json EXTENDED_InnergemeinschLieferungMehrereBestellungen.pdf' do
@@ -25,15 +25,15 @@ class InvoiceTest < ActiveSupport::TestCase
     assert_match '<?xml version=', invoice.xml_document
     due_payable_amount = invoice.xml_document_to_json.dig('rsm:CrossIndustryInvoice',
                                                           'rsm:SupplyChainTradeTransaction', 'ram:ApplicableHeaderTradeSettlement', 'ram:SpecifiedTradeSettlementHeaderMonetarySummation', 'ram:DuePayableAmount')
-    assert_match '2000.00', due_payable_amount
-    assert_match '2000.00', invoice.due_payable_amount
-    assert_match '2018-10-31T00:00:00+00:00', invoice.invoice_date.to_s
-    assert_match '47110818', invoice.invoice_number
-    assert_match invoice.sender[:name].strip, 'Global Supplies Ltd.'
-    assert_match invoice.sender[:vat], 'GB999999999'
-    assert_match invoice.recipient[:name], 'Metallbau Leipzig GmbH & Co. KG'
-    assert_match invoice.recipient[:vat], 'DE123456789'
-    assert_match invoice.invoice_currency_code, 'EUR'
+    assert_equal '2000.00', due_payable_amount
+    assert_equal '2000.00', invoice.due_payable_amount
+    assert_equal '2018-10-31T00:00:00+00:00', invoice.invoice_date.to_s
+    assert_equal '47110818', invoice.invoice_number
+    assert_equal invoice.sender[:name].strip, 'Global Supplies Ltd.'
+    assert_equal invoice.sender[:vat], 'GB999999999'
+    assert_equal invoice.recipient[:name], 'Metallbau Leipzig GmbH & Co. KG'
+    assert_equal invoice.recipient[:vat], 'DE123456789'
+    assert_equal invoice.invoice_currency_code, 'EUR'
   end
 
   test 'xml_document_to_json EXTENDED_Fremdwaehrung.pdf' do
@@ -42,7 +42,8 @@ class InvoiceTest < ActiveSupport::TestCase
     invoice.pdf_document.attach(io: File.open(file_path), filename: 'EXTENDED_Fremdwaehrung.pdf')
     PdfBlobToXmlJob.perform_now(invoice)
 
-    assert_match invoice.invoice_currency_code, 'GBP'
+    assert_equal invoice.invoice_currency_code, 'GBP'
+    assert_equal invoice.sender[:vat], 'DE123456789'
   end
 
   test 'import xml document directly' do
@@ -59,6 +60,15 @@ class InvoiceTest < ActiveSupport::TestCase
     invoice = Invoice.create(xml_document: File.read(file_path))
     assert_nil invoice.invoice_number
     assert_not invoice.reload.xml_valid
+  end
+
+  test 'xml_document_to_json XRECHNUNG_Elektron.pdf' do
+    invoice = Invoice.create
+    file_path = 'db/fixtures/factur-x/XRECHNUNG/XRECHNUNG_Elektron.pdf'
+    invoice.pdf_document.attach(io: File.open(file_path), filename: 'XRECHNUNG_Elektron.pdf')
+    PdfBlobToXmlJob.perform_now(invoice)
+
+    assert_equal invoice.sender[:vat], ["201/113/40209", "DE123456789"]
   end
 end
 # rubocop:enable Layout/LineLength
