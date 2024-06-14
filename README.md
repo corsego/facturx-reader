@@ -15,6 +15,8 @@ rails s
 
 ### Theoretical notes
 
+ZUGFeRD combines structured data with a visual PDF, while XRechnung relies exclusively on structured data.
+
 PDF/A-3: PDF with embedded XML - human and machine readable
 
 match incoming invoice with purchase order => pay
