@@ -44,4 +44,6 @@
       <%= invoice.recipient %>
     <% end %>
   </p>
+
+  <%= button_to 'Delete', invoice, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
 </div>

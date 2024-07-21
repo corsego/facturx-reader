@@ -21,4 +21,11 @@ class InvoicesController < ApplicationController
   def show
     @invoice = Invoice.find(params[:id])
   end
+
+  def destroy
+    @invoice = Invoice.find(params[:id])
+    @invoice.destroy
+
+    redirect_to invoices_url, notice: 'Invoice deleted.'
+  end
 end
