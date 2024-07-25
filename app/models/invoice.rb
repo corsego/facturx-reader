@@ -8,6 +8,10 @@ class Invoice < ApplicationRecord
 
   after_create_commit :extract_xml
 
+  def pretty_xml
+    Nokogiri::XML(xml_document).to_xml(indent: 2)
+  end
+
   private
 
   def extract_xml
