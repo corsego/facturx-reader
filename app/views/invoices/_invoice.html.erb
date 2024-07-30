@@ -3,7 +3,7 @@
   <p>
     <strong>File attached:</strong>
     <% if invoice.pdf_document.attached? %>
-      <%= link_to rails_blob_path(invoice.pdf_document, disposition: "inline") do %>
+      <%= link_to rails_blob_path(invoice.pdf_document, disposition: "inline"), target: :_blank do %>
         <% if invoice.pdf_document.representable? %>
           <%= image_tag invoice.pdf_document.representation(resize_to_limit: [200, 200]) %>
         <% end %>
